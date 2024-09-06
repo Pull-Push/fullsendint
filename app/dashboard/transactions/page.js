@@ -9,6 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link'
 import { getTransactions } from '/app/lib/data.js';
 
+
 const user = {
     name: 'Phil Coulson',
     email: 'Phil@Shield.com',
@@ -171,7 +172,7 @@ export default function Page() {
                                         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                                             {/* <Search placeholder="Search transactions..." /> */}
 
-                                            <table className="min-w-full divide-y divide-gray-300">
+                                            <table id='trans-table'  className="min-w-full divide-y divide-gray-300">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
