@@ -6,11 +6,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { sql } from "@vercel/postgres";
 import Image from 'next/image';
 import Search from '/app/ui/search.js';
-import { fetchFilteredTransactions } from '/app/lib/data.js';
-
-
 import Link from 'next/link'
-// import { useSearchParams } from 'next/navigation';
 
 
 const user = {
