@@ -1,8 +1,5 @@
-// `app/dashboard/page.js` is the UI for the `/dashboard` URL
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, AcademicCapIcon, BanknotesIcon, CheckBadgeIcon, ClockIcon, ReceiptRefundIcon, UsersIcon, } from '@heroicons/react/24/outline'
-import Link from 'next/link'
-
 
 const user = {
     name: 'Phil Coulson',
@@ -71,19 +68,9 @@ const actions = [
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-// new below this line
-
 export default function Example() {
     return (
         <>
-            {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
             <div className="min-h-full">
                 <div className="bg-gray-800 pb-32">
                     <Disclosure as="nav" className="bg-gray-800">
@@ -209,8 +196,8 @@ export default function Example() {
 
                 <main className="-mt-32">
                     <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-                        <div className="rounded-lg bg-white px-5 py-6 shadow sm:px-6">{/* Your content */}
-                            {/* card content below */}
+                        <div className="rounded-lg bg-white px-5 py-6 shadow sm:px-6">
+                            {/* PLACE HOLDER CARDS */}
                             <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
                                 {actions.map((action, actionIdx) => (
                                     <div
@@ -237,7 +224,6 @@ export default function Example() {
                                         <div className="mt-8">
                                             <h3 className="text-base font-semibold leading-6 text-gray-900">
                                                 <a href={action.href} className="focus:outline-none">
-                                                    {/* Extend touch target to entire panel */}
                                                     <span aria-hidden="true" className="absolute inset-0" />
                                                     {action.title}
                                                 </a>
@@ -258,14 +244,6 @@ export default function Example() {
                                     </div>
                                 ))}
                             </div>
-
-
-
-
-
-
-
-
                         </div>
                     </div>
                 </main>

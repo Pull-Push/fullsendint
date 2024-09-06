@@ -1,4 +1,3 @@
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { sql } from "@vercel/postgres";
 import {createTransaction } from '../lib/data.js'
 const { rows } = await sql`SELECT id, name FROM customers `;

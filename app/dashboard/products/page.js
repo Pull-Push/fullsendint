@@ -1,7 +1,5 @@
-// `app/products/page.js` is the UI for the `/products` URL
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import Link from 'next/link'
 import { sql } from "@vercel/postgres";
 
 
@@ -30,19 +28,9 @@ const { rows } = await sql`SELECT * from products`;
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-// new below this line
-
 export default function Page() {
     return (
         <>
-            {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
             <div className="min-h-full">
                 <div className="bg-gray-800 pb-32">
                     <Disclosure as="nav" className="bg-gray-800">
@@ -77,7 +65,7 @@ export default function Page() {
                                     </div>
                                     <div className="hidden md:block">
                                         <div className="ml-4 flex items-center md:ml-6">
-                                            {/* Profile dropdown */}
+                                            {/* Dropdown */}
                                             <Menu as="div" className="relative ml-3">
                                                 <div>
                                                     <MenuButton className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -168,7 +156,7 @@ export default function Page() {
 
                 <main className="-mt-32">
                     <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-                        <div className="rounded-lg bg-white px-5 py-6 shadow sm:px-6">{/* Your content */}
+                        <div className="rounded-lg bg-white px-5 py-6 shadow sm:px-6">
                             <div className="px-4 sm:px-6 lg:px-8">
                                 <div className="mt-8 flow-root">
                                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

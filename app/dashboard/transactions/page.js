@@ -1,5 +1,3 @@
-// `app/transactions/page.js` is the UI for the `/transactions` URL
-// `app/products/page.js` is the UI for the `/products` URL
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/20/solid'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -7,8 +5,6 @@ import { sql } from "@vercel/postgres";
 import Image from 'next/image';
 // import Search from '/app/ui/search.js';
 import Link from 'next/link'
-import { getTransactions } from '/app/lib/data.js';
-
 
 const user = {
     name: 'Phil Coulson',
@@ -27,13 +23,11 @@ const userNavigation = [
     { name: 'Settings', href: '#' },
     { name: 'Sign out', href: '#' },
 ]
-const { rows } = await sql`SELECT * FROM transactions JOIN customers ON transactions.customer_id = customers.id ORDER BY transactions.date DESC LIMIT 6`;
+const { rows } = await sql`SELECT * FROM transactions JOIN customers ON transactions.customer_id = customers.id ORDER BY transactions.date DESC LIMIT 15`;
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-
-// new below this line
 
 export default function Page() {
     return (
@@ -72,7 +66,7 @@ export default function Page() {
                                     </div>
                                     <div className="hidden md:block">
                                         <div className="ml-4 flex items-center md:ml-6">
-                                            {/* Profile dropdown */}
+                                            {/* Dropdown */}
                                             <Menu as="div" className="relative ml-3">
                                                 <div>
                                                     <MenuButton className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -100,7 +94,6 @@ export default function Page() {
                                         </div>
                                     </div>
                                     <div className="-mr-2 flex md:hidden">
-                                        {/* Mobile menu button */}
                                         <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                             <span className="absolute -inset-0.5" />
                                             <span className="sr-only">Open main menu</span>
@@ -163,7 +156,7 @@ export default function Page() {
 
                 <main className="-mt-32">
                     <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-                        <div className="rounded-lg bg-white px-5 py-6 shadow sm:px-6">{/* Your content */}
+                        <div className="rounded-lg bg-white px-5 py-6 shadow sm:px-6">
                             {/* table below */}
                             <div className="px-4 sm:px-6 lg:px-8">
                                 <div className="mt-8 flow-root">
@@ -204,9 +197,6 @@ export default function Page() {
                                                                     height={28}
                                                                     alt={`${transaction.name}'s profile picture`}
                                                                 />
-                                                            </td>
-                                                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                                                                {transaction.name}
                                                             </td>
                                                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                                                                 {transaction.name}
