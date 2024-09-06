@@ -103,3 +103,14 @@ export async function createTransaction(data){
     revalidatePath('/dashboard/transactions');
     redirect('/dashboard/transactions')
 }
+
+export async function getTransactions() {
+  const data  = await sql
+  `SELECT * FROM transactions 
+  JOIN customers 
+  ON transactions.customer_id = customers.id 
+  ORDER BY transactions.date DESC LIMIT 6`;
+  // console.log(data.rows)
+  const transactions = data.rows;
+  return transactions
+}

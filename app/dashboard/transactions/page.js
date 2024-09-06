@@ -7,7 +7,7 @@ import { sql } from "@vercel/postgres";
 import Image from 'next/image';
 import Search from '/app/ui/search.js';
 import Link from 'next/link'
-
+import { getTransactions } from '/app/lib/data.js';
 
 const user = {
     name: 'Phil Coulson',
@@ -35,8 +35,8 @@ function classNames(...classes) {
 // new below this line
 
 export default function Page() {
-    return (
 
+    return (
         <>
             <div className="min-h-full">
                 <div className="bg-gray-800 pb-32">
@@ -181,9 +181,6 @@ export default function Page() {
                                                             Customer
                                                         </th>
                                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                            Name
-                                                        </th>
-                                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                             Amount
                                                         </th>
                                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -212,9 +209,9 @@ export default function Page() {
                                                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                                                                 {transaction.name}
                                                             </td>
-                                                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                                                            {/* <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                                                                 {transaction.name}
-                                                            </td>
+                                                            </td> */}
                                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{transaction.amount}</td>
                                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{transaction.status}</td>
                                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{transaction.date.toISOString().split('T')[0]}</td>
@@ -304,7 +301,7 @@ export default function Page() {
                                             href="/dashboard/transactions/create"
                                             className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                                         >
-                                            <span className="hidden md:block">Create Transaction</span>{' '}
+                                            <span className="hidden md:block">Create Transaction</span>
                                         </Link>
                                     </div>
                                 </div>
