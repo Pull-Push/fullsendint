@@ -5,7 +5,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { sql } from "@vercel/postgres";
 import Image from 'next/image';
-import Search from '/app/ui/search.js';
+// import Search from '/app/ui/search.js';
 import Link from 'next/link'
 import { getTransactions } from '/app/lib/data.js';
 
