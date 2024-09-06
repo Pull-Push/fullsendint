@@ -1,10 +1,14 @@
-// `app/customers/page.js` is the UI for the `/customers` URL
+// `app/transactions/page.js` is the UI for the `/transactions` URL
+// `app/products/page.js` is the UI for the `/products` URL
+import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/20/solid'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import Link from 'next/link'
 import { sql } from "@vercel/postgres";
-import Image from 'next/image';
+import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import Form from '/app/ui/create.js';
 
+
+import Link from 'next/link'
 
 const user = {
     name: 'Phil Coulson',
@@ -14,8 +18,8 @@ const user = {
 }
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: false },
-    { name: 'Transactions', href: '/dashboard/transactions', current: false },
-    { name: 'Customers', href: '#', current: true },
+    { name: 'Transactions', href: '/#', current: true },
+    { name: 'Customers', href: '/dashboard/customers', current: false },
     { name: 'Products', href: '/dashboard/products', current: false },
 ]
 const userNavigation = [
@@ -23,9 +27,7 @@ const userNavigation = [
     { name: 'Settings', href: '#' },
     { name: 'Sign out', href: '#' },
 ]
-
-const { rows } = await sql`SELECT * from customers`;
-
+const { rows } = await sql`SELECT * FROM transactions JOIN customers ON transactions.customer_id = customers.id ORDER BY transactions.date DESC LIMIT 5`;
 
 
 function classNames(...classes) {
@@ -35,6 +37,7 @@ function classNames(...classes) {
 
 export default function Page() {
     return (
+
         <>
             {/*
         This example requires updating your template:
@@ -162,7 +165,7 @@ export default function Page() {
                     </Disclosure>
                     <header className="py-10">
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                            <h1 className="text-3xl font-bold tracking-tight text-white">Customers</h1>
+                            <h1 className="text-3xl font-bold tracking-tight text-white">Create Transaction</h1>
                         </div>
                     </header>
                 </div>
@@ -170,62 +173,8 @@ export default function Page() {
                 <main className="-mt-32">
                     <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
                         <div className="rounded-lg bg-white px-5 py-6 shadow sm:px-6">{/* Your content */}
-                            <div className="px-4 sm:px-6 lg:px-8">
-                                <div className="mt-8 flow-root">
-                                    <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                                            <table className="min-w-full divide-y divide-gray-300">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                                                            Avatar
-                                                        </th>
-                                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                            Name
-                                                        </th>
-                                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                            Email
-                                                        </th>
-                                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                                                            <span className="sr-only">Edit</span>
-                                                        </th>
-                                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                                                            <span className="sr-only">Delete</span>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="divide-y divide-gray-200">
-                                                    {rows.map((customer) => (
-                                                        <tr key={customer.id}>
-                                                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                                                                <Image
-                                                                    src={customer.image_url}
-                                                                    className="rounded-full"
-                                                                    width={28}
-                                                                    height={28}
-                                                                    alt={`${customer.name}'s profile picture`}
-                                                                />
-                                                            </td>
-                                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{customer.name}</td>
-                                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{customer.email}</td>
-                                                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                    Edit<span className="sr-only">, {customer.id}</span>
-                                                                </a>
-                                                            </td>
-                                                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                    Delete<span className="sr-only">, {customer.id}</span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <Form/>
+
                         </div>
                     </div>
                 </main>

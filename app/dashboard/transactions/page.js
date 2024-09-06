@@ -4,9 +4,13 @@ import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/20/solid
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { sql } from "@vercel/postgres";
+import Image from 'next/image';
+import Search from '/app/ui/search.js';
+import { fetchFilteredTransactions } from '/app/lib/data.js';
 
 
 import Link from 'next/link'
+// import { useSearchParams } from 'next/navigation';
 
 
 const user = {
@@ -26,7 +30,8 @@ const userNavigation = [
     { name: 'Settings', href: '#' },
     { name: 'Sign out', href: '#' },
 ]
-const { rows } = await sql`SELECT * from transactions`;
+const { rows } = await sql`SELECT * FROM transactions JOIN customers ON transactions.customer_id = customers.id ORDER BY transactions.date DESC LIMIT 6`;
+
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -176,23 +181,19 @@ export default function Page() {
                                 <div className="mt-8 flow-root">
                                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                                            <div>
-                                                <label htmlFor="email" className="sr-only">
-                                                    Email
-                                                </label>
-                                                <input
-                                                    id="filterInvoice"
-                                                    name="filterInvoice"
-                                                    type="text"
-                                                    placeholder="Search For Invoice"
-                                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                />
-                                            </div>
+                                            <Search placeholder="Search transactions..." />
+
                                             <table className="min-w-full divide-y divide-gray-300">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                                                            Avatar
+                                                        </th>
+                                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                             Customer
+                                                        </th>
+                                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                            Name
                                                         </th>
                                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                             Amount
@@ -212,11 +213,23 @@ export default function Page() {
                                                     {rows.map((transaction) => (
                                                         <tr key={transaction.id}>
                                                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                                                                {transaction.customer_id}
+                                                                <Image
+                                                                    src={transaction.image_url}
+                                                                    className="rounded-full"
+                                                                    width={28}
+                                                                    height={28}
+                                                                    alt={`${transaction.name}'s profile picture`}
+                                                                />
+                                                            </td>
+                                                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                                                                {transaction.name}
+                                                            </td>
+                                                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                                                                {transaction.name}
                                                             </td>
                                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{transaction.amount}</td>
                                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{transaction.status}</td>
-                                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{transaction.customer_id}</td>
+                                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{transaction.date.toISOString().split('T')[0]}</td>
                                                             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                                                                 <a href="#" className="text-indigo-600 hover:text-indigo-900">
                                                                     Edit<span className="sr-only">, {transaction.id}</span>
@@ -299,11 +312,12 @@ export default function Page() {
                                 </div>
                                 <div className="sm:flex sm:items-center">
                                     <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                                        <button
-                                            type="button"
-                                            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                            Add Transaction
-                                        </button>
+                                        <Link
+                                            href="/dashboard/transactions/create"
+                                            className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                        >
+                                            <span className="hidden md:block">Create Transaction</span>{' '}
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
